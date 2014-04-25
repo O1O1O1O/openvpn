@@ -6,6 +6,9 @@ HTDOCS=/var/www/openvpn/htdocs
 # enable ip forwarding
 sed -i "/^#net.ipv4.ip_forward=1/ s/#//" /etc/sysctl.conf
 
+# create the tun device if it doesn't exist
+[ -e /dev/net/tun ] || ( mkdir -p /dev/net && mknod /dev/net/tun c 10 200 )
+
 # install/copy easy-rsa
 cd /usr/share/doc/openvpn/examples/easy-rsa/2.0/
 [ -e README ] || gzip -d README.gz
